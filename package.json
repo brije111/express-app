@@ -2,7 +2,7 @@
   "name": "rest-project",
   "version": "1.0.0",
   "description": "a dummy rest app using node+typescript+express+mongodb",
-  "main": "index.ts",
+  "main": "./dist/server.js",
   "scripts": {
     "build": "tsc",
     "dev": "ts-node ./lib/server.ts",
