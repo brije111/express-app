@@ -7,7 +7,7 @@ const mongoose = require("mongoose");
 class App {
     constructor() {
         this.routePrv = new crmRoutes_1.Routes();
-        this.mongoUrl = 'mongodb://localhost/CRMdb';
+        this.mongoUrl = process.env.MONGODB_URI; //'mongodb://localhost/CRMdb';
         this.app = express();
         this.config();
         this.routePrv.routes(this.app);
