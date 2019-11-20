@@ -1,12 +1,13 @@
 import * as mongoose from 'mongoose';
 import { ContactSchema, UserSchema } from '../models/crmModel';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import * as jwt from 'jsonwebtoken';
+import RequestWrapper from 'models/RequestWrapper';
 
 const Contact = mongoose.model('Contact', ContactSchema);
 export class ContactController {
 
-    public getContacts(req: Request, res: Response) {
+    public getContacts(req: RequestWrapper, res: Response) {
         Contact.find({}, (err, contact) => {
             if (err) {
                 res.send(err);
@@ -16,7 +17,7 @@ export class ContactController {
     }
 
 
-    public addNewContact(req: Request, res: Response) {
+    public addNewContact(req: RequestWrapper, res: Response) {
         let newContact = new Contact(req.body);
 
         newContact.save((err, contact) => {
@@ -27,7 +28,7 @@ export class ContactController {
         });
     }
 
-    public getContactWithID(req: Request, res: Response) {
+    public getContactWithID(req: RequestWrapper, res: Response) {
         Contact.findById(req.params.contactId, (err, contact) => {
             if (err) {
                 res.send(err);
@@ -36,7 +37,7 @@ export class ContactController {
         });
     }
 
-    public updateContact(req: Request, res: Response) {
+    public updateContact(req: RequestWrapper, res: Response) {
         Contact.findOneAndUpdate({ _id: req.params.contactId }, req.body, { new: true }, (err, contact) => {
             if (err) {
                 res.send(err);
@@ -45,7 +46,7 @@ export class ContactController {
         });
     }
 
-    public deleteContact(req: Request, res: Response) {
+    public deleteContact(req: RequestWrapper, res: Response) {
         Contact.remove({ _id: req.params.contactId }, (err) => {
             if (err) {
                 res.send(err);
@@ -59,7 +60,8 @@ export class ContactController {
 const User = mongoose.model('User', UserSchema);
 export class UserController {
 
-    public getUsers(req: Request, res: Response) {
+    public getUsers(req: RequestWrapper, res: Response) {
+        console.log(req.user);
         User.find({}, (err, user) => {
             if (err) {
                 res.send(err);
@@ -69,7 +71,7 @@ export class UserController {
     }
 
 
-    public addNewUser(req: Request, res: Response) {
+    public addNewUser(req: RequestWrapper, res: Response) {
         let newUser = new User(req.body);
 
         newUser.save((err, user) => {

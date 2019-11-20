@@ -1,13 +1,10 @@
 import * as jwt from 'jsonwebtoken';
 import * as mongoose from 'mongoose';
-import { Request, Response } from 'express';
-
-interface MyRequest extends Request {
-    user: mongoose.Document;
-}
+import { Response } from 'express';
+import RequestWrapper from 'models/RequestWrapper';
 
 const User = mongoose.model('User');
-module.exports = (req: MyRequest, res: Response, next) => {
+export default (req: RequestWrapper, res: Response, next) => {
     const { authorization } = req.headers;
 
     if (!authorization)

@@ -51,6 +51,7 @@ exports.ContactController = ContactController;
 const User = mongoose.model('User', crmModel_1.UserSchema);
 class UserController {
     getUsers(req, res) {
+        console.log(req.user);
         User.find({}, (err, user) => {
             if (err) {
                 res.send(err);
