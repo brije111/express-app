@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose = require("mongoose");
 const crmModel_1 = require("../models/crmModel");
+const jwt = require("jsonwebtoken");
 const Contact = mongoose.model('Contact', crmModel_1.ContactSchema);
 class ContactController {
     getContacts(req, res) {
@@ -47,4 +48,26 @@ class ContactController {
     }
 }
 exports.ContactController = ContactController;
+const User = mongoose.model('User', crmModel_1.UserSchema);
+class UserController {
+    getUsers(req, res) {
+        User.find({}, (err, user) => {
+            if (err) {
+                res.send(err);
+            }
+            res.json(user);
+        });
+    }
+    addNewUser(req, res) {
+        let newUser = new User(req.body);
+        newUser.save((err, user) => {
+            if (err) {
+                res.send(err);
+            }
+            const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+            res.json({ token });
+        });
+    }
+}
+exports.UserController = UserController;
 //# sourceMappingURL=crmController.js.map

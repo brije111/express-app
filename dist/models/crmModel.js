@@ -25,4 +25,15 @@ exports.ContactSchema = new Schema({
         default: Date.now
     }
 });
+exports.UserSchema = new Schema({
+    email: {
+        type: String,
+        unique: true,
+        required: 'Enter an email'
+    },
+    password: {
+        type: String,
+        required: 'Enter a password'
+    }
+});
 //# sourceMappingURL=crmModel.js.map
