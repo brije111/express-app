@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
-import { ContactSchema } from '../models/crmModel';
+import { ContactSchema, UserSchema } from '../models/crmModel';
 import { Request, Response } from 'express';
+import * as jwt from 'jsonwebtoken';
 
 const Contact = mongoose.model('Contact', ContactSchema);
 export class ContactController {
@@ -53,4 +54,30 @@ export class ContactController {
         });
     }
 
+}
+
+const User = mongoose.model('User', UserSchema);
+export class UserController {
+
+    public getUsers(req: Request, res: Response) {
+        User.find({}, (err, user) => {
+            if (err) {
+                res.send(err);
+            }
+            res.json(user);
+        });
+    }
+
+
+    public addNewUser(req: Request, res: Response) {
+        let newUser = new User(req.body);
+
+        newUser.save((err, user) => {
+            if (err) {
+                res.send(err);
+            }
+            const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET)
+            res.json({ token });
+        });
+    }
 }

@@ -14,7 +14,6 @@ class App {
         this.config();
         this.routePrv.routes(this.app);
         this.mongoSetup();
-
     }
 
     private mongoSetup(): void {

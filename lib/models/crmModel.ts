@@ -25,3 +25,15 @@ export const ContactSchema = new Schema({
         default: Date.now
     }
 });
+
+export const UserSchema = new Schema({
+    email: {
+        type: String,
+        unique: true,
+        required: 'Enter an email'
+    },
+    password: {
+        type: String,
+        required: 'Enter a password'
+    }
+});

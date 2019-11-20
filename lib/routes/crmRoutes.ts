@@ -1,9 +1,10 @@
 import { Application, Request, Response } from "express";
-import { ContactController } from "../controllers/crmController";
+import { ContactController, UserController } from "../controllers/crmController";
 
 export class Routes {
 
     public contactController: ContactController = new ContactController();
+    public userController: UserController = new UserController();
 
     public routes(app: Application): void {
         app.route('/')
@@ -26,5 +27,12 @@ export class Routes {
             .get(this.contactController.getContactWithID)
             .put(this.contactController.updateContact)
             .delete(this.contactController.deleteContact);
+
+        // User 
+        app.route('/user')
+            // GET endpoint 
+            .get(this.userController.getUsers)
+            // POST endpoint
+            .post(this.userController.addNewUser);
     }
 }
