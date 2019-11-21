@@ -4,7 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const crmRoutes_1 = require("./routes/crmRoutes");
 const mongoose = require("mongoose");
-const requireAuth_1 = require("middleware/requireAuth");
+const requireAuth_1 = require("./middleware/requireAuth");
 class App {
     constructor() {
         this.routePrv = new crmRoutes_1.Routes();
