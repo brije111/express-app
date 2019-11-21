@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const crmController_1 = require("../controllers/crmController");
+const requireAuth_1 = require("../middleware/requireAuth");
 class Routes {
     constructor() {
         this.contactController = new crmController_1.ContactController();
@@ -28,9 +29,11 @@ class Routes {
         // User 
         app.route('/user')
             // GET endpoint 
-            .get(this.userController.getUsers)
+            .get(requireAuth_1.default, this.userController.getUsers)
             // POST endpoint
             .post(this.userController.addNewUser);
+        app.route('/signin')
+            .post(this.userController.signInUser);
     }
 }
 exports.Routes = Routes;

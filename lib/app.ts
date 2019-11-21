@@ -2,7 +2,8 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import { Routes } from "./routes/crmRoutes";
 import * as mongoose from "mongoose";
-import requireAuth from './middleware/requireAuth';
+import * as dotenv from "dotenv";
+dotenv.config();
 
 class App {
 
@@ -25,8 +26,6 @@ class App {
     private config(): void {
         // support application/json type post data
         this.app.use(bodyParser.json());
-        //adding middleware 
-        this.app.use(requireAuth);
         //support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
     }

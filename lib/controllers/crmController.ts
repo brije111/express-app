@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-import { ContactSchema, UserSchema } from '../models/crmModel';
+import { ContactSchema, UserSchema, UserDocument } from '../models/crmModel';
 import { Response } from 'express';
 import * as jwt from 'jsonwebtoken';
 import RequestWrapper from 'models/RequestWrapper';
@@ -57,7 +57,7 @@ export class ContactController {
 
 }
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model<UserDocument>('User', UserSchema);
 export class UserController {
 
     public getUsers(req: RequestWrapper, res: Response) {
@@ -78,8 +78,29 @@ export class UserController {
             if (err) {
                 res.send(err);
             }
-            const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET)
+            const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);//process.env.JWT_SECRET
             res.json({ token });
         });
+    }
+
+    public async signInUser(req: RequestWrapper, res: Response) {
+        const { email, password } = req.body;
+
+        if (!email || !password) {
+            res.status(422).send({ error: 'Must provide email & password' });
+        }
+
+        const user = await User.findOne({ email });
+        if (!user) {
+            res.status(422).send({ error: 'Email not found' });
+        }
+
+        try {
+            await user.comparePassword(password);
+            const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+            res.send({ token });
+        } catch (err) {
+            res.status(422).send({ error: 'Invalid password or email' });
+        }
     }
 }

@@ -11,10 +11,13 @@
   "author": "brijesh",
   "license": "ISC",
   "dependencies": {
+    "@types/bcrypt-nodejs": "0.0.30",
     "@types/express": "^4.17.2",
     "@types/jsonwebtoken": "^8.3.5",
     "@types/mongoose": "^5.5.32",
+    "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.19.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.11",

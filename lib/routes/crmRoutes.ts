@@ -1,5 +1,6 @@
 import { Application, Request, Response } from "express";
 import { ContactController, UserController } from "../controllers/crmController";
+import requireAuth from "../middleware/requireAuth";
 
 export class Routes {
 
@@ -31,8 +32,11 @@ export class Routes {
         // User 
         app.route('/user')
             // GET endpoint 
-            .get(this.userController.getUsers)
+            .get(requireAuth, this.userController.getUsers)
             // POST endpoint
             .post(this.userController.addNewUser);
+
+        app.route('/signin')
+            .post(this.userController.signInUser);
     }
 }
