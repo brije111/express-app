@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const crmRoutes_1 = require("./routes/crmRoutes");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require("cors");
 dotenv.config();
 class App {
     constructor() {
@@ -22,6 +23,8 @@ class App {
     config() {
         // support application/json type post data
         this.app.use(bodyParser.json());
+        //for cross origin browser access
+        this.app.use(cors());
         //support application/x-www-form-urlencoded post data
         this.app.use(bodyParser.urlencoded({ extended: false }));
     }
